@@ -6,9 +6,12 @@ from django.db.models import (
     Model,
     CASCADE,
     OneToOneField,
+    CharField
 )
-from .validators import validate_national_code
-
+from .validators import (
+    validate_national_code,
+    validate_phone_number
+) 
 
 class CustomUserType(TextChoices):
     TEACHER = ("teacher", "معلم")
@@ -23,6 +26,7 @@ class CustomUser(AbstractUser):
         default=CustomUserType.STUDENT,
         max_length=20,
     )
+    phone_number = CharField(validators=[validate_phone_number], max_length=11)
 
 
 class Teacher(Model):
