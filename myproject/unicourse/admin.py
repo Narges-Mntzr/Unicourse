@@ -7,8 +7,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "national_code", "license")
-    search_fields = ["user"]
+    list_display = ("id", "national_code", "license")
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

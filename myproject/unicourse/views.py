@@ -4,19 +4,19 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegisterForm
+from .forms import (UserRegisterForm, TeacherRegisterForm)
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
-
+from .models import CustomUserType
 
 ########### index####################################### 
 def index(request):
 	return render(request, 'user/index.html', {'title':'index'})
 
 ########### register##################################### 
-def register(request):
+def registerLearner(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
@@ -29,12 +29,23 @@ def register(request):
 		form = UserRegisterForm()
 	return render(request, 'user/register.html', {'form': form, 'title':'register here'})
 
+def registerTeacher(request):
+	if request.method == 'POST':
+		form = TeacherRegisterForm(request.POST)
+		if form.is_valid():
+			user = form.cleaned_data['user']
+			user.user_type = CustomUserType.TEACHER
+			teacher = form.save()
+			messages.success(request, f'Your account has been created ! You are now able to log in')
+			return redirect('login')
+	else:
+		form = TeacherRegisterForm()
+	return render(request, 'user/register.html', {'form': form, 'title':'register here'})
+
+
 ########### login forms####################################
 def Login(request):
 	if request.method == 'POST':
-
-		# AuthenticationForm_can_also_be_used__
-
 		username = request.POST['username']
 		password = request.POST['password']
 		user = authenticate(request, username = username, password = password)

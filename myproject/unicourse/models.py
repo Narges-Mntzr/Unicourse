@@ -30,13 +30,8 @@ class CustomUser(AbstractUser):
 
 
 class Teacher(Model):
-    user = OneToOneField(CustomUser, verbose_name="کاربر", on_delete=CASCADE)
-    national_code = TextField(
-        verbose_name="کدملی", max_length=15, validators=[validate_national_code]
+    user = OneToOneField(CustomUser, verbose_name="User", on_delete=CASCADE)
+    national_code = CharField(
+        verbose_name="National Code", max_length=15, validators=[validate_national_code]
     )
-    license = TextField(verbose_name="کدپرسنلی", max_length=10)
-
-    def clean(self):
-        super().clean()
-        if self.user.user_type != CustomUserType.TEACHER:
-            raise ValidationError("نوع کاربر باید معلم تعریف شده باشد.")
+    license = TextField(verbose_name="license", max_length=30)
