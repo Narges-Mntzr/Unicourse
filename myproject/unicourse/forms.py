@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.contrib.auth.forms import UserCreationForm
-from .models import Teacher
+from .models import (Teacher, Institute)
 
 class UserRegisterForm(UserCreationForm):
 	email = forms.EmailField()
@@ -17,3 +17,8 @@ class TeacherRegisterForm(forms.ModelForm):
 	class Meta:
 		model = Teacher
 		fields = ['user', 'national_code', 'license']
+
+class InstituteRegisterForm(forms.ModelForm):
+	class Meta:
+		model = Institute
+		fields = ['user', 'name', 'license', 'address']

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import (UserRegisterForm, TeacherRegisterForm)
+from .forms import (UserRegisterForm, TeacherRegisterForm, InstituteRegisterForm)
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
@@ -40,6 +40,18 @@ def registerTeacher(request):
 			return redirect('login')
 	else:
 		form = TeacherRegisterForm()
+	return render(request, 'user/register.html', {'form': form, 'title':'register here'})
+
+
+def registerInstitute(request):
+	if request.method == 'POST':
+		form = InstituteRegisterForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Your account has been created ! You are now able to log in')
+			return redirect('login')
+	else:
+		form = InstituteRegisterForm()
 	return render(request, 'user/register.html', {'form': form, 'title':'register here'})
 
 

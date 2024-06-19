@@ -6,7 +6,8 @@ from django.db.models import (
     Model,
     CASCADE,
     OneToOneField,
-    CharField
+    CharField,
+    BooleanField
 )
 from .validators import (
     validate_national_code,
@@ -35,3 +36,19 @@ class Teacher(Model):
         verbose_name="National Code", max_length=15, validators=[validate_national_code]
     )
     license = TextField(verbose_name="license", max_length=30)
+
+
+class Institute(Model):
+    user = OneToOneField(CustomUser, verbose_name="User", on_delete=CASCADE)
+    name = CharField(
+        verbose_name="Institute Name", max_length=100, unique=True
+    )
+    address = TextField(
+        verbose_name="Address", max_length=200
+    )
+    license = TextField(
+        verbose_name="License", max_length=30
+    )
+    is_approved = BooleanField(
+        verbose_name="Is Approved", default=False
+    )
