@@ -9,10 +9,11 @@ class CustomUserAdmin(admin.ModelAdmin):
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ("id", "national_code", "license")
 
+
 class InstituteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'license', 'address')
+    list_display = ("user", "name", "license", "address")
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Institute,  InstituteAdmin)
+admin.site.register(Institute, InstituteAdmin)

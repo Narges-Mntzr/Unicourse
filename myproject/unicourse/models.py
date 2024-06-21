@@ -7,12 +7,10 @@ from django.db.models import (
     CASCADE,
     OneToOneField,
     CharField,
-    BooleanField
+    BooleanField,
 )
-from .validators import (
-    validate_national_code,
-    validate_phone_number
-) 
+from .validators import validate_national_code, validate_phone_number
+
 
 class CustomUserType(TextChoices):
     TEACHER = ("teacher", "معلم")
@@ -40,15 +38,7 @@ class Teacher(Model):
 
 class Institute(Model):
     user = OneToOneField(CustomUser, verbose_name="User", on_delete=CASCADE)
-    name = CharField(
-        verbose_name="Institute Name", max_length=100, unique=True
-    )
-    address = TextField(
-        verbose_name="Address", max_length=200
-    )
-    license = TextField(
-        verbose_name="License", max_length=30
-    )
-    is_approved = BooleanField(
-        verbose_name="Is Approved", default=False
-    )
+    name = CharField(verbose_name="Institute Name", max_length=100, unique=True)
+    address = TextField(verbose_name="Address", max_length=200)
+    license = TextField(verbose_name="License", max_length=30)
+    is_approved = BooleanField(verbose_name="Is Approved", default=False)

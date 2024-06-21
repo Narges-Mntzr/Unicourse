@@ -128,13 +128,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # crispy forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-
-EMAIL_HOST_USER = 'shirin.behnaminia@gmail.com'
-EMAIL_HOST_PASSWORD = 'shirin9919863'
+CRISPY_TEMPLATE_PACK = "bootstrap4"
