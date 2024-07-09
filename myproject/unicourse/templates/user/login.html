@@ -1,20 +1,30 @@
 {% extends "user/index.html" %}
 {% load crispy_forms_tags %}
 {% block start %}
-
 <div class="content-section col-md-8 col-md-offset-2">
-<center>
-<form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
-	{% csrf_token %}
-	<fieldset class="form-group">
-	{{ form|crispy}}
-	</fieldset>
-<center>
-	<button style="background: black; font-size: 2rem; padding:1%;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-log-in"></span>  login</button>
-</center>
-<br/>
-<sub style="text-align: left;"><a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:2%; cursor:pointer; margin-right:2%;">don't have account,sign up</a></sub>
-</form>
-</center>
+    <center>
+        <form method="POST" style="margin: 4%; padding:10%; border-radius:1%;">
+            {% csrf_token %}
+			<input type="hidden" name="user" value="{{ user }}">
+            <fieldset class="form-group">
+				<div>
+					{% for field in form %}
+						{{ field|as_crispy_field }}
+					{% endfor %}
+				</div>
+            </fieldset>
+            <center>
+                <button style="background: #137255; font-size: 2rem; padding:1% 5%; border-radius: 10px;" class="btn btn-outline-info" type="submit">
+                    <span class="glyphicon glyphicon-log-in"></span> Log In
+                </button>
+            </center>
+            <br/>
+            <sub style="text-align: left;">
+                <a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:2%; cursor:pointer;">
+                    don't have an account? sign up
+                </a>
+            </sub>
+        </form>
+    </center>
 </div>
 {% endblock start %}

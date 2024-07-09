@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
 from django.db.models import (
     TextChoices,
     TextField,
@@ -8,6 +7,7 @@ from django.db.models import (
     OneToOneField,
     CharField,
     BooleanField,
+    DateField,
 )
 from .validators import validate_national_code, validate_phone_number
 
@@ -38,7 +38,28 @@ class Teacher(Model):
 
 class Institute(Model):
     user = OneToOneField(CustomUser, verbose_name="User", on_delete=CASCADE)
-    name = CharField(verbose_name="Institute Name", max_length=100, unique=True)
     address = TextField(verbose_name="Address", max_length=200)
     license = TextField(verbose_name="License", max_length=30)
     is_approved = BooleanField(verbose_name="Is Approved", default=False)
+
+
+class SchoolTypeChoices(TextChoices):
+    HIGH_SCHOOL = ("high", "دبیرستان")
+    MIDDLE_SCHOOL = ("middle", "راهنمایی")
+    ELEMENTARY_SCHOOL = ("elementary", "دبستان")
+
+
+class Student(Model):
+    user = OneToOneField(CustomUser, verbose_name="User", on_delete=CASCADE)
+    birthday = DateField(verbose_name="تاریخ تولد")
+    school = TextField(max_length=30, verbose_name="اسم مدرسه")
+    type_of_school = TextField(
+        verbose_name="مقطع تحصیلی",
+        choices=SchoolTypeChoices.choices,
+        default=SchoolTypeChoices.ELEMENTARY_SCHOOL,
+        max_length=20,
+    )
+
+    class Meta:
+        verbose_name = "Student"
+        verbose_name_plural = "Students"

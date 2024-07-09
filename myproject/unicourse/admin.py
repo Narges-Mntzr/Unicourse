@@ -1,19 +1,22 @@
 from django.contrib import admin
-from .models import CustomUser, Teacher, Institute
+from .models import CustomUser, Teacher, Institute, Student
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ("username", "user_type")
 
 
+@admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ("id", "national_code", "license")
 
 
+@admin.register(Institute)
 class InstituteAdmin(admin.ModelAdmin):
-    list_display = ("user", "name", "license", "address")
+    list_display = ("user", "license", "address")
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Institute, InstituteAdmin)
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    pass

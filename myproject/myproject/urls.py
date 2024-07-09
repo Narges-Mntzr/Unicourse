@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("unicourse.urls")),
-    path("login/", user_view.Login, name="login"),
+    path("login/", user_view.loginPage, name="login"),
     path(
         "logout/",
         auth.LogoutView.as_view(template_name="unicourse/index.html"),

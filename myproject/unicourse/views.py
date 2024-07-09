@@ -2,14 +2,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegisterForm, TeacherRegisterForm, InstituteRegisterForm
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
-from django.template import Context
-from .models import CustomUserType
+from .forms import (
+    UserRegisterForm,
+    TeacherRegisterForm,
+    InstituteRegisterForm,
+    StudentRegisterForm,
+    LoginForm,
+)
+from .models import CustomUser, CustomUserType
 
 
 ########### index#######################################
@@ -18,60 +18,59 @@ def index(request):
 
 
 ########### register#####################################
-def registerLearner(request):
-    if request.method == "POST":
+
+
+def register(request):
+    user = request.POST.get("user") if request.method == "POST" else "new_user"
+    print(user)
+    if user != "new_user":
+        user = CustomUser.objects.get(username=user)
+
+    if request.method == "POST" and user == "new_user":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("username")
-            email = form.cleaned_data.get("email")
-            messages.success(
-                request, f"Your account has been created ! You are now able to log in"
-            )
+            user = form.cleaned_data.get("username")
+            user_type = form.cleaned_data.get("user_type")
+            if user_type == CustomUserType.INSTITUTE:
+                form = InstituteRegisterForm()
+            elif user_type == CustomUserType.TEACHER:
+                form = TeacherRegisterForm()
+            else:
+                form = StudentRegisterForm()
+    elif request.method == "POST" and user.user_type == CustomUserType.INSTITUTE:
+        form = InstituteRegisterForm(request.POST)
+        if form.is_valid():
+            institute = form.save(commit=False)
+            institute.user = user
+            institute.save()
+            return redirect("login")
+    elif request.method == "POST" and user.user_type == CustomUserType.TEACHER:
+        form = TeacherRegisterForm(request.POST)
+        if form.is_valid():
+            teacher = form.save(commit=False)
+            teacher.user = user
+            teacher.save()
+            return redirect("login")
+    elif request.method == "POST":
+        form = StudentRegisterForm(request.POST)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.user = user
+            student.save()
             return redirect("login")
     else:
         form = UserRegisterForm()
+        user = "new_user"
     return render(
-        request, "user/register.html", {"form": form, "title": "register here"}
-    )
-
-
-def registerTeacher(request):
-    if request.method == "POST":
-        form = TeacherRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.cleaned_data["user"]
-            user.user_type = CustomUserType.TEACHER
-            teacher = form.save()
-            messages.success(
-                request, f"Your account has been created ! You are now able to log in"
-            )
-            return redirect("login")
-    else:
-        form = TeacherRegisterForm()
-    return render(
-        request, "user/register.html", {"form": form, "title": "register here"}
-    )
-
-
-def registerInstitute(request):
-    if request.method == "POST":
-        form = InstituteRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request, f"Your account has been created ! You are now able to log in"
-            )
-            return redirect("login")
-    else:
-        form = InstituteRegisterForm()
-    return render(
-        request, "user/register.html", {"form": form, "title": "register here"}
+        request,
+        "user/register.html",
+        {"form": form, "title": "register here", "user": user},
     )
 
 
 ########### login forms####################################
-def Login(request):
+def loginPage(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -81,6 +80,6 @@ def Login(request):
             messages.success(request, f" welcome {username} !!")
             return redirect("index")
         else:
-            messages.info(request, f"account done not exit plz sign in")
-    form = AuthenticationForm()
+            messages.info(request, "account done not exit plz sign in")
+    form = LoginForm()
     return render(request, "user/login.html", {"form": form, "title": "log in"})
