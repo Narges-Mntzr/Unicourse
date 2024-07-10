@@ -9,7 +9,8 @@ from .forms import (
     StudentRegisterForm,
     LoginForm,
 )
-from .models import CustomUser, CustomUserType
+from .models import CustomUser, CustomUserType, Teacher
+from django.http import JsonResponse, request
 
 
 ########### index#######################################
@@ -92,3 +93,18 @@ def loginPage(request):
             messages.info(request, "account done not exit plz sign in")
     form = LoginForm()
     return render(request, "user/login.html", {"form": form, "title": "log in"})
+
+
+########### APIs ####################################
+def getAllTeachers(request):
+    teachers = list(
+        Teacher.objects.values(
+            "user__first_name",
+            "user__last_name",
+            "user__email",
+            "user__phone_number",
+            "license",
+            "national_code",
+        )
+    )
+    return JsonResponse(teachers, safe=False)
