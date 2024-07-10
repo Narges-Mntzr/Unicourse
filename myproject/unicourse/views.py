@@ -44,6 +44,9 @@ def register(request):
             institute = form.save(commit=False)
             institute.user = user
             institute.save()
+            messages.success(
+                request, f"Congratulations, your account has been successfully created."
+            )
             return redirect("login")
     elif request.method == "POST" and user.user_type == CustomUserType.TEACHER:
         form = TeacherRegisterForm(request.POST)
@@ -51,6 +54,9 @@ def register(request):
             teacher = form.save(commit=False)
             teacher.user = user
             teacher.save()
+            messages.success(
+                request, f"Congratulations, your account has been successfully created."
+            )
             return redirect("login")
     elif request.method == "POST":
         form = StudentRegisterForm(request.POST)
@@ -58,6 +64,9 @@ def register(request):
             student = form.save(commit=False)
             student.user = user
             student.save()
+            messages.success(
+                request, f"Congratulations, your account has been successfully created."
+            )
             return redirect("login")
     else:
         form = UserRegisterForm()

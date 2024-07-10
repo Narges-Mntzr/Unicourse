@@ -121,7 +121,13 @@ class InstituteRegisterForm(forms.ModelForm):
 
 class StudentRegisterForm(forms.ModelForm):
     birthday = forms.DateField(
-        label=False, widget=forms.TextInput(attrs={"placeholder": "Birthday*"})
+        label=False,
+        widget=forms.DateInput(
+            attrs={
+                "placeholder": "Birthday*",
+                "data-date-format": "yyyy/mm/dd",
+            }
+        ),
     )
     school = forms.CharField(
         label=False,
