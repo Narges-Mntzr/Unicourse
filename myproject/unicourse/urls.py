@@ -5,4 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("register/", views.register, name="register"),
     path("api/teachers/", views.getAllTeachers, name="get_all_teachers"),
+    path("api/institutes/", views.getAllInstitutes, name="get_all_institutes"),
 ]

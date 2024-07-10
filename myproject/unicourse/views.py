@@ -9,7 +9,7 @@ from .forms import (
     StudentRegisterForm,
     LoginForm,
 )
-from .models import CustomUser, CustomUserType, Teacher
+from .models import CustomUser, CustomUserType, Teacher, Institute
 from django.http import JsonResponse, request
 
 
@@ -100,7 +100,6 @@ def getAllTeachers(request):
     teachers = list(
         Teacher.objects.values(
             "user__first_name",
-            "user__last_name",
             "user__email",
             "user__phone_number",
             "license",
@@ -108,3 +107,16 @@ def getAllTeachers(request):
         )
     )
     return JsonResponse(teachers, safe=False)
+
+
+def getAllInstitutes(request):
+    institutes = list(
+        Institute.objects.values(
+            "user__first_name",
+            "user__email",
+            "user__phone_number",
+            "license",
+            "address",
+        )
+    )
+    return JsonResponse(institutes, safe=False)
