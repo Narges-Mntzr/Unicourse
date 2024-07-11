@@ -48,7 +48,7 @@ def register(request):
             messages.success(
                 request, f"Congratulations, your account has been successfully created."
             )
-            return redirect("login")
+            return redirect("index")
     elif request.method == "POST" and user.user_type == CustomUserType.TEACHER:
         form = TeacherRegisterForm(request.POST)
         if form.is_valid():
@@ -58,7 +58,7 @@ def register(request):
             messages.success(
                 request, f"Congratulations, your account has been successfully created."
             )
-            return redirect("login")
+            return redirect("index")
     elif request.method == "POST":
         form = StudentRegisterForm(request.POST)
         if form.is_valid():
@@ -68,7 +68,7 @@ def register(request):
             messages.success(
                 request, f"Congratulations, your account has been successfully created."
             )
-            return redirect("login")
+            return redirect("index")
     else:
         form = UserRegisterForm()
         user = "new_user"

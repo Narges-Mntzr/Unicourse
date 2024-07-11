@@ -23,7 +23,7 @@ class InstituteAdmin(admin.ModelAdmin):
             
             send_mail(
                 'Institute Approved',
-                'Your institute has been approved. Welcome to Unicourse!',
+                'Welcome to Unicourse! I\'m Shirin 🌚, your personal assistant, how can I help you?',
                 'from@unicourse.com',
                 [email],
                 fail_silently=False,
