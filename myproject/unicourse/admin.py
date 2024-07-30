@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.mail import send_mail
-from .models import CustomUser, Teacher, Institute, Student
+from .models import CustomUser, Teacher, Institute, Student, Course, StudentCourse
 
 
 @admin.register(CustomUser)
@@ -20,11 +20,11 @@ class InstituteAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if change and obj.is_approved:
             email = obj.user.email
-            
+
             send_mail(
-                'Institute Approved',
-                'Welcome to Unicourse! I\'m Shirin 🌚, your personal assistant, how can I help you?',
-                'from@unicourse.com',
+                "Institute Approved",
+                "Welcome to Unicourse! I'm Shirin 🌚, your personal assistant, how can I help you?",
+                "from@unicourse.com",
                 [email],
                 fail_silently=False,
             )
@@ -34,4 +34,14 @@ class InstituteAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(StudentCourse)
+class StudentCourseAdmin(admin.ModelAdmin):
     pass

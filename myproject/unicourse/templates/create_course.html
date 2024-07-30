@@ -1,0 +1,35 @@
+{% extends "user/index.html" %}
+{% load crispy_forms_tags %}
+{% block start %}
+<div class="content-section col-md-8 col-md-offset-2">
+    <center>
+        <form method="POST" style="margin: 4%; padding:10%; border-radius:1%;">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        {% for field in form %}
+                            {% if not forloop.counter|divisibleby:2 %}
+                                {{ field|as_crispy_field }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {% for field in form %}
+                            {% if forloop.counter|divisibleby:2 %}
+                                {{ field|as_crispy_field }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </fieldset>
+            <center>
+                <button style="background: #137255; font-size: 2rem; padding:1% 5%; border-radius: 10px;" class="btn btn-outline-info" type="submit">
+                    <span class="glyphicon glyphicon-log-in"></span> Add course
+                </button>
+            </center>
+            <br/>
+        </form>
+    </center>
+</div>
+{% endblock start %}

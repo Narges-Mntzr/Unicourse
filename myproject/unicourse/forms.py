@@ -3,7 +3,14 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import Teacher, Institute, Student, CustomUserType, SchoolTypeChoices
+from .models import (
+    Teacher,
+    Institute,
+    Student,
+    CustomUserType,
+    SchoolTypeChoices,
+    Course,
+)
 
 User = get_user_model()
 
@@ -165,3 +172,43 @@ class LoginForm(AuthenticationForm):
                 {"class": "form-control custom-placeholder", "style": style}
             )
             self.fields[field_name].label = False
+
+
+class AddCourseForm(forms.ModelForm):
+
+    class Meta:
+        model = Course
+        fields = [
+            "teacher",
+            "name",
+            "price",
+            "prerequisite",
+            "start_date",
+            "end_date",
+            "days_of_week",
+            "class_start_time",
+            "class_end_time",
+        ]
+        widgets = {
+            "prerequisite": forms.Textarea(attrs={"rows": 3}),
+            "days_of_week": forms.Textarea(attrs={"rows": 3}),
+        }
+        labels = {
+            "teacher": "استاد",
+            "name": "اسم دوره",
+            "price": "هزینه دوره",
+            "prerequisite": "دوره های پیشنیاز",
+            "start_date": "تاریخ شروع دوره",
+            "end_date": "تاریخ پایان دوره",
+            "days_of_week": "روزهای برگزاری دوره در هفته",
+            "class_start_time": "زمان شروع دوره در روز",
+            "class_end_time": "زمان پایان دوره در روز",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        style = "background-color: #BDBDBD;color: black; height:50px; border-radius: 10px; margin:20px;"
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update(
+                {"class": "form-control custom-placeholder", "style": style}
+            )

@@ -1,0 +1,40 @@
+{% extends "user/index.html" %}
+{% load crispy_forms_tags %}
+{% load date_filters %}
+{% block start %}
+<div class="container" style="margin-top: 5%;">
+    <h1>My Courses</h1>
+    <div class="row">
+        {% for student_course in student_courses %}
+            <div class="col-md-4" style="margin: 1%; border: 2px solid rgb(80, 78, 78); border-radius: 20px; padding: 3%;">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ student_course.course }}</h5>
+                        <p class="card-text">
+                            <strong>Teacher:</strong> {{ student_course.course.teacher.user.first_name }}<br>
+                            <strong>Price:</strong> {{ student_course.course.price }}<br>
+                            <strong>Start Date:</strong> {{ student_course.course.start_date }}<br>
+                            <strong>End Date:</strong> {{ student_course.course.end_date }}<br>
+                            <strong>Days of Week:</strong> {{ student_course.course.days_of_week }}<br>
+                            <strong>Start Time:</strong> {{ student_course.course.class_start_time }}<br>
+                            <strong>End Time:</strong> {{ student_course.course.class_end_time }}<br>
+                            <strong>Prerequisite:</strong> {{ student_course.course.prerequisite }}<br>
+                        </p>
+                        {% if now.time >= student_course.course.class_start_time and now.time <= student_course.course.class_end_time and student_course.course.days_of_week|is_class_today %}
+                            <a href="{{ student_course.course.link_adr }}" class="btn btn-primary">Join Course</a>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled>Class Not in Session</button>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <center>
+        <a style="background: #137255; font-size: 2rem; padding:1% 5%; border-radius: 10px; color:white;" class="btn btn-outline-info" href="/course/get">
+            <span class="glyphicon glyphicon-log-in"></span> Get course
+        </a>
+    </center>
+</div>
+{% endblock start %}
