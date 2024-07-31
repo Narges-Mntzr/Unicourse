@@ -5,10 +5,12 @@
     <h1>Courses for {{ institute.user.first_name }}</h1>
     <div class="row">
         {% for course in courses %}
-            <div class="col-md-4" style="margin: 1%; border: 2px solid rgb(80, 78, 78); border-radius: 20px; padding: 3%;">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ course.name }}</h5>
+        <div class="col-md-4" style="margin: 1%; border: 2px solid #b49900; border-radius: 20px; padding: 3%; background-color: #f9f9f9;">
+            <div class="card mb-4" style="border: none; border-radius: 15px; overflow: hidden;">
+                 <div class="card-body">
+                    <img src="https://picsum.photos/300/200" alt="{{ student_course.course.course }}" class="card-img-top" style="border-bottom: 2px solid #4A4A4A;">
+                    <h5 class="card-title" style="color: green; font-weight: bold; font-size: 1.5rem;">{{ student_course.course }}</h5>
+
                         <p class="card-text">
                             <strong>Teacher:</strong> {{ course.teacher.user.first_name }}<br>
                             <strong>Price:</strong> {{ course.price }}<br>
@@ -19,7 +21,7 @@
                             <strong>End Time:</strong> {{ course.class_end_time }}<br>
                             <strong>Prerequisite:</strong> {{ course.prerequisite }}<br>
                         </p>
-                        <a href="{{ course.link_adr }}" class="btn btn-primary">Join Course</a>
+                        <a href="{{ course.link_adr }}" class="btn btn-primary" style="background-color: hsl(51, 100%, 35%); border: none; color: black;">Join Course</a>
                     </div>
                 </div>
             </div>
