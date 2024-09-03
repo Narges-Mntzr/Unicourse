@@ -37,12 +37,6 @@ Welcome to Unicourse, an online education system developed as part of a software
 - **Login/Register:** Use the provided forms to create an account or log in to an existing one.
 - **Manage Courses:** Institutions can create courses, assign teachers, and manage enrollments.
 
-### File Structure
-
-- **myproject/unicourse/models.py:** Defines the data models for Users, Teachers, Institutes, Courses, and Student enrollments.
-- **myproject/unicourse/views.py:** Contains the logic for handling user requests, registration, course management, and API endpoints.
-- **myproject/unicourse/forms.py:** Custom forms for user registration, login, and course creation.
-- **myproject/unicourse/templates/user/login.html:** Template for the login page with a simple, user-friendly interface.
 
 ### Collaborators:
 **Shirin Behnami nia:** Email: hhagh2002@gmail.com , Github: [shirinbehnami](https://github.com/shirinbehnami).<br />
