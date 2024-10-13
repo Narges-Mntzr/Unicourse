@@ -39,5 +39,5 @@ Welcome to Unicourse, an online education system developed as part of a software
 
 
 ### Collaborators:
-**Shirin Behnami nia:** Email: hhagh2002@gmail.com , Github: [shirinbehnami](https://github.com/shirinbehnami).<br />
+**Shirin Behnami nia:** Email: shirin.behnaminia@gmail.com , Github: [shirinbehnami](https://github.com/shirinbehnami).<br />
 **Narges Montazeri:** Email: Narges.montazeri81@gmail.com , Github: [Narges-Mntzr](https://github.com/Narges-Mntzr).<br />
